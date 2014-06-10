@@ -35,13 +35,16 @@ class Event(models.Model):
     name = models.CharField('Name of event', max_length = 20, choices = EVENTS)
 
     def __unicode__(self):
-	return self.name
+	return self.name.verbose_name
 
 
 class EventTeam(models.Model):
 
     school = models.ForeignKey('School')
     event = models.ForeignKey('Event')
+#    mem1 = models.CharField('Member 1', max_length = 20)
+#    mem2 = models.CharField('Member 2', max_length = 20, blank=True)
+#    mem3 = models.CharField('Member 3', max_length = 20, blank=True)
 
     def __unicode__(self):
 	str = self.event + ': ' + self.school.name
