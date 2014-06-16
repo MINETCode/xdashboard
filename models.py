@@ -76,5 +76,21 @@ class Genius(models.Model):
     school = models.ForeignKey('School')
     name = models.CharField('Name', max_length = 20)
 
+    class Meta:
+	verbose_name_plural = 'Genii'
+
     def __unicode__(self):
 	return self.name
+
+def getEventList():
+
+    EVENTS = (
+	('Quiz', 'Quizzing'),
+	('Design', 'Design'),
+	('Robot', 'Robotics'),
+	('Prog', 'Programming'),
+	('Photo', 'Photography'),
+#	('SurEven', 'Surprise Event'),
+)
+
+    return EVENTS
