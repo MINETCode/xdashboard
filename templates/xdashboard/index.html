@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<title> MINET X Dashboard </title>
+    </head>
+
+    <body>
+	{% if user.is_authenticated %}
+	<h1> Welcome back, {{ user.username }} </h1>
+
+	{% else %}
+	<form_id="login_form" method="post" action="/xdashboard/login/">
+	    {% csrf_token %}
+	    Username: <input type="text" name="username" value="" size="50" />
+	    <br/>
+	    Password: <input type="password" name="password" value="" size="50" />
+	    <br/>
+	
+	    <input type="submit" value="Log in" />
+    
+	</form>
+	{% endif %}
+    </body>
+</html>
