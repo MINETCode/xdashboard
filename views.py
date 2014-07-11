@@ -3,11 +3,15 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import login
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, logout
+from django.forms.formsets import formset_factory
 
 from xdashboard.models import School, Event, EventTeam, Member, Product, Genius
 from xdashboard.forms import EventTeamForm, BaseEventTeamFormSet, ProductForm
 
 # Create your views here.
+
 
 # Dashboard login
 
@@ -23,10 +27,10 @@ def register(request):
     currSchool = School.objects.get(user = request.user)
     eventTuple = Event.EVENTS
     noOfEvents = len(eventTuple)
-    EventTeamFormSet = formset_factory(EventTeamForm, extra = noOfEvents - 1, formset=BaseEventTeamFormSet)
+    EventTeamFormSet = formset_factory(EventTeamForm, extra = noOfEvents, formset=BaseEventTeamFormSet)
 
     if request.method == 'POST':
-	formset = EventTeamFormSet(request.POST, request.FILES)
+	formset = EventTeamFormSet(request.POST)
 
 	if formset.is_valid():	
 	    i = 0
@@ -62,6 +66,11 @@ def register(request):
 
 		    i += 1
 
+		    return HttpResponse("Done")
+
+	    else:
+		print formset.errors
+
     else:
 	formset = EventTeamFormSet()
 
@@ -76,4 +85,13 @@ def home(request):
 
     context = RequestContext(request)
     currSchool = School.objects.get(user = request.user) 
+
+
+def leaderboard(request):
+
+    context = RequestContext(request)
+    currSchool = School.objects.get(user = request.user) 
+
+
 '''
+
