@@ -15,12 +15,12 @@
 	{% csrf_token %}
 
         {{ formset.management_form }}
-        
-	<p>
+    
 	    {% for form in formset %}
+	    <p>
 	    {{ form }}
+	    </p>
 	    {% endfor %}
-        </p>
 
 	<input type="submit" name="submit" value="Submit" />
 

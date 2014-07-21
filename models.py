@@ -20,7 +20,8 @@ class Event(models.Model):
 	('Robot', 'Robotics'),
 	('Prog', 'Programming'),
 	('Photo', 'Photography'),
-#	('SurEven', 'Surprise Event'),
+	('Game', 'Gaming'),
+	('GD', 'Group Discussion'),
 )
 
     memDict = {
@@ -29,25 +30,23 @@ class Event(models.Model):
 	'Robot': 2,
 	'Prog': 2,
 	'Photo': 1,
-#	'SurEven': 2,	
+	'Game': 1,
+	'GD': 1,
 }
 
     name = models.CharField('Name of event', max_length = 20, choices = EVENTS)
 
     def __unicode__(self):
-	return self.name.verbose_name
+	return self.name
 
 
 class EventTeam(models.Model):
 
     school = models.ForeignKey('School')
     event = models.ForeignKey('Event')
-#    mem1 = models.CharField('Member 1', max_length = 20)
-#    mem2 = models.CharField('Member 2', max_length = 20, blank=True)
-#    mem3 = models.CharField('Member 3', max_length = 20, blank=True)
 
     def __unicode__(self):
-	str = self.event + ': ' + self.school.name
+	str = self.event.name + ': ' + self.school.name
 	return str
 
 
@@ -65,7 +64,9 @@ class Product(models.Model):
     school = models.ForeignKey('School')
     name = models.CharField('Name of product', max_length = 20)
     descr = models.TextField('Description', max_length = 100)
+    cost = models.IntegerField('Cost')
     upForAcq = models.BooleanField('Up for acquisition', default = False)
+    acqSchool = models.CharField('School', max_length = 30, blank = True, null = True)
 
     def __unicode__(self):
 	return self.name
@@ -73,24 +74,12 @@ class Product(models.Model):
 
 class Genius(models.Model):
 
-    school = models.ForeignKey('School')
     name = models.CharField('Name', max_length = 20)
+    school = models.CharField('School', max_length = 30, blank = True, null = True)
+    active = models.BooleanField('Active', default = False)
 
     class Meta:
 	verbose_name_plural = 'Genii'
 
     def __unicode__(self):
 	return self.name
-
-def getEventList():
-
-    EVENTS = (
-	('Quiz', 'Quizzing'),
-	('Design', 'Design'),
-	('Robot', 'Robotics'),
-	('Prog', 'Programming'),
-	('Photo', 'Photography'),
-#	('SurEven', 'Surprise Event'),
-)
-
-    return EVENTS

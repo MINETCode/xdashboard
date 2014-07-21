@@ -7,11 +7,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, logout
 from django.forms.formsets import formset_factory
 
+import random
+
 from xdashboard.models import School, Event, EventTeam, Member, Product, Genius
 from xdashboard.forms import EventTeamForm, BaseEventTeamFormSet, ProductForm
 
 # Create your views here.
-
 
 # Dashboard login
 
@@ -76,22 +77,80 @@ def register(request):
 
     context_dict = {
 	'formset': formset,
+	'currSchool': currSchool,
     }
 
     return render_to_response('xdashboard/register.html', context_dict, context)
 
-'''
+
+@login_required(login_url = '/xdashboard/login/')
 def home(request):
 
     context = RequestContext(request)
     currSchool = School.objects.get(user = request.user) 
 
+    if request.method == 'POST':
+	request_genius(currSchool)
 
-def leaderboard(request):
+    try:
+        genList = Genius.objects.filter(school = currSchool.name)
+    except:
+	genList = Genius.objects.none()
+
+    context_dict = {
+	'currSchool': currSchool,
+	'genList': genList,
+    }
+ 
+    return render_to_response('xdashboard/home.html', context_dict, context)
+
+def request_genius(currSchool):
+
+    try:    
+        genList = Genius.objects.filter(active = False)
+        nameList = []
+        for gen in genList:
+	    nameList.append(gen.name)
+        genName = random.choice(nameList)
+        genius = Genius.objects.get(name = genName)
+        genius.school = currSchool.name
+        genius.active = True
+        genius.save(update_fields = ['school'])
+        genius.save(update_fields = ['active'])
+	salary = 2000                   # change this depending on salary of genius
+	currSchool.currCap -= salary
+    except IndexError:
+	pass
+
+
+@login_required(login_url = '/xdashboard/login/')
+def products(request):
 
     context = RequestContext(request)
     currSchool = School.objects.get(user = request.user) 
+    prodList = Product.objects.filter(upForAcq = True).order_by('school')
+    ownProdList = Product.objects.filter(school = currSchool)
+    prod_form = ProductForm()    
 
+    context_dict = {
+	'currSchool': currSchool,
+	'prodList': prodList,
+	'ownProdList': ownProdList,
+	'prod_form': prod_form,
+    }
 
-'''
+    if request.method == 'POST':
+	if prod_form.is_valid():
+	    prod_form.save()
+	else:
+	    print prod_form.errors
 
+    return render_to_response('xdashboard/products.html', context_dict, context)
+
+"""
+@login_required(login_url = '/xdashboard/login/')
+def leaderboard(request):
+    context = RequestContext(request)
+    currSchool = School.objects.get(user = request.user) 
+    return render_to_response('xdashboard/register.html', context_dict, context)
+"""

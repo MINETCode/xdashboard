@@ -9,7 +9,7 @@
 	<h1> Welcome back, {{ user.username }} </h1>
 
 	{% else %}
-	<form_id="login_form" method="post" action="/xdashboard/login/">
+	<form id="login_form" method="post" action="/xdashboard/login/">
 	    {% csrf_token %}
 	    Username: <input type="text" name="username" value="" size="50" />
 	    <br/>
