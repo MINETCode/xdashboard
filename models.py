@@ -55,7 +55,7 @@ class Member(models.Model):
     name = models.CharField('Name of member', max_length = 20)
     events = models.ManyToManyField('EventTeam')
 
-    def __unicode(self):
+    def __unicode__(self):
 	return self.name
     
 
@@ -69,8 +69,8 @@ class Product(models.Model):
     acqSchool = models.CharField('School', max_length = 30, blank = True, null = True)
 
     def __unicode__(self):
-	return self.name
-
+	str = self.name + ': ' + self.school.name
+	return str
 
 class Genius(models.Model):
 

@@ -130,7 +130,18 @@ def products(request):
     currSchool = School.objects.get(user = request.user) 
     prodList = Product.objects.filter(upForAcq = True).order_by('school')
     ownProdList = Product.objects.filter(school = currSchool)
-    prod_form = ProductForm()    
+
+    if request.method == 'POST':
+        prod_form = ProductForm(request.POST)    
+	if prod_form.is_valid():
+	    product = prod_form.save(commit=False)
+	    product.school = currSchool
+	    prod_form.save()
+	else:
+	    print prod_form.errors
+
+    else:
+	prod_form = ProductForm()    
 
     context_dict = {
 	'currSchool': currSchool,
@@ -139,18 +150,12 @@ def products(request):
 	'prod_form': prod_form,
     }
 
-    if request.method == 'POST':
-	if prod_form.is_valid():
-	    prod_form.save()
-	else:
-	    print prod_form.errors
-
     return render_to_response('xdashboard/products.html', context_dict, context)
 
 """
 @login_required(login_url = '/xdashboard/login/')
-def leaderboard(request):
+def leaderboards(request):
     context = RequestContext(request)
     currSchool = School.objects.get(user = request.user) 
-    return render_to_response('xdashboard/register.html', context_dict, context)
+    return render_to_response('xdashboard/leaderboards.html', context)
 """
