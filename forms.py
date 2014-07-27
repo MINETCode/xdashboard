@@ -40,3 +40,6 @@ class ProductForm(forms.ModelForm):
     class Meta:
 	model = Product
 	fields = ('name', 'descr', 'upForAcq', 'cost')
+
+class ProductAcqForm(forms.Form):
+    acq = forms.BooleanField()

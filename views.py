@@ -10,7 +10,7 @@ from django.forms.formsets import formset_factory
 import random
 
 from xdashboard.models import School, Event, EventTeam, Member, Product, Genius
-from xdashboard.forms import EventTeamForm, BaseEventTeamFormSet, ProductForm
+from xdashboard.forms import EventTeamForm, BaseEventTeamFormSet, ProductForm, ProductAcqForm
 
 # Create your views here.
 
@@ -130,23 +130,49 @@ def products(request):
     currSchool = School.objects.get(user = request.user) 
     prodList = Product.objects.filter(upForAcq = True).order_by('school')
     ownProdList = Product.objects.filter(school = currSchool)
+    noOfProducts = len(prodList)
+    ProductAcqFormSet = formset_factory(ProductAcqForm, extra = noOfProducts)
 
     if request.method == 'POST':
-        prod_form = ProductForm(request.POST)    
-	if prod_form.is_valid():
-	    product = prod_form.save(commit=False)
-	    product.school = currSchool
-	    prod_form.save()
-	else:
-	    print prod_form.errors
+
+	if request.POST['action'] == 'product_create':
+            prod_form = ProductForm(request.POST)    
+	    formset = ProductAcqFormSet()
+	    if prod_form.is_valid():
+	        product = prod_form.save(commit=False)
+	        product.school = currSchool
+	        prod_form.save()
+	    else:
+	        print prod_form.errors
+
+	elif request.POST['action'] == 'product_acq':
+            formset = ProductAcqFormSet(request.POST, request.FILES) 
+	    prod_form = ProductForm()   
+	    if formset.is_valid():            
+	        i = 0
+	        for form in formset:
+		    acq = form.cleaned_data['acq']
+		    if acq == True:
+            	        product = prodList[i]
+		        product.isAcq = True
+		        product.acqSchool = currSchool.name
+		        product.upForAcq = False
+		        product.save(update_fields = ['isAcq'])
+		        product.save(update_fields = ['acqSchool'])
+		        product.save(update_fields = ['upForAcq'])
+		        cost = product.cost
+		        currSchool.currCap -= cost
+		        product.school.currCap += cost
 
     else:
 	prod_form = ProductForm()    
+	formset = ProductAcqFormSet()
 
     context_dict = {
 	'currSchool': currSchool,
 	'prodList': prodList,
 	'ownProdList': ownProdList,
+	'formset': formset,
 	'prod_form': prod_form,
     }
 

@@ -30,6 +30,26 @@
 
 	</table> 
 
+	<form id="acq_form" method="post" action="/xdashboard/products/">
+	
+	{% csrf_token %}
+
+	<table>	
+	<tr>
+	<th> Acquire? </th>
+	</tr>
+	{{ formset.management_form }}
+
+	    {% for form in formset %}
+	    <tr>
+	    {{ form }}
+	    </tr>
+	    {% endfor %}
+	</table>
+
+	<input type="hidden" name="action" value="product_acq" />
+	<input type="submit" name="submit" value="Acquire!" />
+	
 	<h2> Your products </h2>
 
 	<table style="width:300px">
@@ -64,6 +84,7 @@
 
 	    {{ prod_form.as_p }}
 
+ 	    <input type="hidden" name="action" value="product_create" />
 	    <input type="submit" name="submit" value="Submit" />
 
 	</form>

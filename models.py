@@ -66,6 +66,7 @@ class Product(models.Model):
     descr = models.TextField('Description', max_length = 100)
     cost = models.IntegerField('Cost')
     upForAcq = models.BooleanField('Up for acquisition', default = False)
+    isAcq = models.BooleanField('Acquired', default = False)
     acqSchool = models.CharField('School', max_length = 30, blank = True, null = True)
 
     def __unicode__(self):
