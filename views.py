@@ -147,9 +147,9 @@ def products(request):
 
 	elif request.POST['action'] == 'product_acq':
             formset = ProductAcqFormSet(request.POST, request.FILES) 
-	    prod_form = ProductForm()   
-	    if formset.is_valid():            
-	        i = 0
+	    prod_form = ProductForm()               
+	    i = 0
+	    if formset.is_valid():
 	        for form in formset:
 		    acq = form.cleaned_data['acq']
 		    if acq == True:

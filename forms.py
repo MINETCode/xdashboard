@@ -42,4 +42,4 @@ class ProductForm(forms.ModelForm):
 	fields = ('name', 'descr', 'upForAcq', 'cost')
 
 class ProductAcqForm(forms.Form):
-    acq = forms.BooleanField()
+    acq = forms.BooleanField(label='')

@@ -17,38 +17,32 @@
 	    <th> Name </th>
 	    <th> Details </th>
 	    <th> Cost </th>
+	    <th> Acquire? </th>
 	</tr>
 
-	{% for prod in prodList %}
 	<tr>
+	{% for prod in prodList %}
 	    <td> {{ prod.school.name }} </td>
 	    <td> {{ prod.name }} </td>
 	    <td> {{ prod.descr }} </td>
-	    <td> {{ prod.cost }} </td> 
+	    <td> {{ prod.cost }} </td>
 	</tr>
 	{% endfor %}
+    <form id="acq_form" method="post" action="/xdashboard/products/">
+	<tr>
+	{{ formset.management_form }}
+	{% for form in formset %}
+	    <td> {{ form }} </td>
+	{% endfor %}
+	</tr>
 
 	</table> 
 
-	<form id="acq_form" method="post" action="/xdashboard/products/">
-	
-	{% csrf_token %}
-
-	<table>	
-	<tr>
-	<th> Acquire? </th>
-	</tr>
-	{{ formset.management_form }}
-
-	    {% for form in formset %}
-	    <tr>
-	    {{ form }}
-	    </tr>
-	    {% endfor %}
-	</table>
-
 	<input type="hidden" name="action" value="product_acq" />
 	<input type="submit" name="submit" value="Acquire!" />
+	
+    </form>
+
 	
 	<h2> Your products </h2>
 

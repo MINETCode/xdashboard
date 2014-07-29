@@ -7,6 +7,7 @@ class School(models.Model):
     user = models.OneToOneField(User)
     name = models.CharField('Name of school', max_length=30)
     currCap = models.IntegerField('Current Capital')
+    updates = models.TextField('Updates', max_length=1000)
 
     def __unicode__(self):
 	return self.name
