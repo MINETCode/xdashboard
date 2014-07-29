@@ -83,6 +83,32 @@ def register(request):
     return render_to_response('xdashboard/register.html', context_dict, context)
 
 
+"""
+@login_required(login_url = '/xdashboard/login/')
+def register(request):
+    
+    context = RequestContext(request)
+    currSchool = School.objects.get(user = request.user)
+    eventTuple = Event.EVENTS
+    noOfEvents = len(eventTuple)
+    reg_form = RegisterForm()
+
+    if request.method == 'POST':
+	if reg_form.is_valid():
+	    des = form.cleaned_data['des']
+	    game = form.cleaned_data['game']
+	    gd = form.cleaned_data['gd']
+	    photo = form.cleaned_data['photo']
+	    prog = form.cleaned_data['prog']
+	    quiz = form.cleaned_data['quiz']
+	    robot = form.cleaned_data['robot']
+
+	    eventPart = [des, gd, game, prog, photo, quiz, robot]
+
+	    for i in range(0, noOfEvents):
+			    
+"""
+
 @login_required(login_url = '/xdashboard/login/')
 def home(request):
 
