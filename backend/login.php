@@ -26,6 +26,7 @@
         $_SESSION["username"] = $username;
         $_SESSION["id"] = $id;
         $_SESSION["school_name"] = $school_name;
+        $results = DB::query("INSERT into eventlog (username, category, verb, event, datetime) VALUES (%s, %s, %s, %s, %s)", $_SESSION["username"], "sessions", "started", "session from " . $_SERVER["REMOTE_ADDR"], time());
         header("Location: ../index.php");
     } else {
         header("Location: ../login.php?try=1");
