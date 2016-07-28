@@ -10,7 +10,7 @@
         DB::$password = "anand01";
         DB::$dbName = "classkwo_minet";
     }
-    $results = DB::query("SELECT * FROM prices WHERE team_id = %s", $team_id);
+    $results = DB::query("SELECT * FROM prices WHERE team_id = %s ORDER BY id DESC LIMIT 1", $team_id);
     foreach ($results as $row) {
         $price = $row["stock_price"];
     }

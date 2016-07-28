@@ -29,7 +29,8 @@
         <title>X</title>
         <link rel="stylesheet" href="style.css">
     </head>
-    <body>
+    <body class="big">
+        <div class="update_time"></div>
         <header id="masthead">
             <div class="container">
                 <div class="half">
@@ -50,27 +51,109 @@
                 </div>
             </div>
         </header>
-        <div class="card">
-            <h1><?php echo $_SESSION["school_name"]; ?> &middot; <span class="up" id="stock_price">00.00</span></h1>
-            <div class="eventlog">
-                <h3>Events</h3>
-                <?php
-                    $results = DB::query("SELECT * FROM eventlog WHERE username = %s ORDER BY id DESC LIMIT 20", $_SESSION["username"]);
-                    $nResults = 0;
-                    foreach ($results as $row) {
-                        echo '
-                        <div class="event">
-                            <div>
-                                You ' . $row["verb"] . ' your ' . $row["event"] . '.
+        <div class="container">
+            <div class="row">
+                <div class="half">
+                    <div class="card">
+                        aoijfds
+                    </div>
+                    <div class="card">
+                        <div class="eventlog">
+                            <h3>Events</h3>
+                            <?php
+                                $results = DB::query("SELECT * FROM eventlog WHERE username = %s ORDER BY id DESC LIMIT 20", $_SESSION["username"]);
+                                $nResults = 0;
+                                foreach ($results as $row) {
+                                    echo '
+                                    <div class="event">
+                                        <div>
+                                            You ' . $row["verb"] . ' your ' . $row["event"] . '.
+                                        </div>
+                                        <div class="sub">
+                                            <span>' . ucfirst($row["category"]) . '</span> &middot;
+                                            ' . _ago($row["datetime"]) . ' ago
+                                        </div>
+                                    </div>
+                                    ';
+                                }
+                            ?>
+                            <p>
+                                <a href="events.php">View all &rarr;</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="half">
+                    <div class="card">
+                        <h3 style="margin-bottom: 0">Stock Price</h3>
+                        <div class="big up" id="stock_price">
+                            <?php
+                                $result = DB::query("SELECT stock_price from prices WHERE team_id = %s ORDER BY id DESC LIMIT 1", $_SESSION["id"]);
+                                foreach ($result as $row) {
+                                    $price = $row["stock_price"];
+                                    $random = mt_rand(1, 99);
+                                    $random = $random < 10 ? "0" . $random : $random;
+                                    $random_price = mt_rand(0, 5);
+                                    if (mt_rand(0, 1) > 0) {
+                                        $finalPrice = $price + $random_price;
+                                        $class = "up";
+                                    } else {
+                                        $finalPrice = $price - $random_price;
+                                        $class = "down";
+                                    }
+                                }
+                                echo $finalPrice . "." . $random;
+                            ?>
+                        </div>
+                        <div class="row">
+                            <div class="half">
+                                <p>
+                                    Current Average: <strong>&#x20b9; <?php
+                                        $result = DB::query("SELECT stock_price from prices WHERE team_id = %s ORDER BY id DESC LIMIT 1", $_SESSION["id"]);
+                                        foreach ($result as $row) {
+                                            echo $row["stock_price"];
+                                        }
+                                    ?></strong>
+                                </p>
                             </div>
-                            <div class="sub">
-                                <span>' . ucfirst($row["category"]) . '</span> &middot;
-                                ' . _ago($row["datetime"]) . ' ago
+                            <div class="half">
+                                <p>
+                                    All-time Average: <strong>&#x20b9; <?php
+                                        $result = DB::query("SELECT stock_price from prices WHERE team_id = %s", $_SESSION["id"]);
+                                        $sum = 0; $i = 0;
+                                        foreach ($result as $row) {
+                                            $i++;
+                                            $sum += intval($row["stock_price"]);
+                                        }
+                                        echo $sum / $i;
+                                    ?></strong>
+                                </p>
                             </div>
                         </div>
-                        ';
-                    }
-                ?>
+                        <div class="row">
+                            <div class="half">
+                                <p style="margin-top: 0">
+                                    All-time High: <strong>&#x20b9; <?php
+                                        $result = DB::query("SELECT stock_price from prices WHERE team_id = %s ORDER BY stock_price DESC LIMIT 1", $_SESSION["id"]);
+                                        foreach ($result as $row) {
+                                            echo $row["stock_price"];
+                                        }
+                                    ?></strong>
+                                </p>
+                            </div>
+                            <div class="half">
+                                <p style="margin-top: 0">
+                                    All-time Low: <strong>&#x20b9; <?php
+                                        $result = DB::query("SELECT stock_price from prices WHERE team_id = %s ORDER BY stock_price ASC LIMIT 1", $_SESSION["id"]);
+                                        foreach ($result as $row) {
+                                            echo $row["stock_price"];
+                                        }
+                                    ?></strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <script>
@@ -89,7 +172,7 @@
                         document.querySelector("#stock_price").classList.add("down");
                     }
                 }
-            }, 5000);
+            }, 30000);
         </script>
     </body>
 </html>

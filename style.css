@@ -6,6 +6,10 @@ a {
 
 body { margin: 120px auto 50px auto; text-align: center; max-width: 600px } a { color: #69e }
 
+body.big {
+    max-width: 100%;
+}
+
 body {
     font-family: "Source Sans Pro", sans-serif;
     background: whitesmoke;
@@ -13,12 +17,17 @@ body {
 }
 
 fieldset, .card {
+    box-sizing: border-box;
     background: white;
     border-radius: 3px;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
     border: 1px solid #eee;
-    padding: 40px 40px 25px 40px;
+    padding: 30px 40px 20px 40px;
     text-align: left;
+    margin-bottom: 23px;
+}
+fieldset:last-child, .card:last-child {
+    margin-bottom: 0;
 }
 
 .container {
@@ -118,9 +127,8 @@ textarea {
     content: "\20B9";
 }
 #stock_price.big {
-    float: right;
     font-size: 400%;
-    margin-right: 40px;
+    text-align: center;
 }
 
 #stock_price.up:after {
@@ -143,8 +151,9 @@ textarea {
     top: 0;
     left: 0;
     width: 0%;
+    z-index: 2;
     height: 2px;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.2);
     animation: width 30s linear infinite;
 }
 
@@ -155,11 +164,21 @@ textarea {
 
 .half {
     float: left;
+    width: 49%;
+    box-sizing: border-box;
+    margin-right: 2%;
 }
-.half:first-child {
+.half:last-child {
+    margin-right: 0;
+}
+#masthead .half {
+    margin-right: 0;
+}
+#masthead .half:first-child {
     width: 30%;
     text-align: left;
-}.half:last-child {
+}
+#masthead .half:last-child {
     width: 70%;
     text-align: right;
 }
@@ -179,9 +198,11 @@ textarea {
         font-size: 120% !important;
     }
     .half {
-        text-align: center;
-        width: 100% !important;
         float: none;
+        width: 100% !important;
+    }
+    #masthead .half {
+        text-align: center;
     }
     nav li {
         width: 50%;
@@ -234,4 +255,14 @@ nav a:hover {
 }
 .event span {
     color: #aaa;
+}
+
+h3 {
+    margin-top: 0;
+}
+
+.row:after {
+    content: "";
+    clear: both;
+    display: block;
 }
