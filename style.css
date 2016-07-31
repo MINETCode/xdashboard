@@ -1,4 +1,4 @@
-@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700';
+w@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700';
 
 a {
     transition: color 0.2s;
@@ -24,10 +24,17 @@ fieldset, .card {
     border: 1px solid #eee;
     padding: 30px 40px 20px 40px;
     text-align: left;
+    position: relative;
     margin-bottom: 23px;
 }
 fieldset:last-child, .card:last-child {
     margin-bottom: 0;
+}
+
+.help-link {
+    position: absolute;
+    right: 40px;
+    top: 30px;
 }
 
 .container {
@@ -265,4 +272,23 @@ h3 {
     content: "";
     clear: both;
     display: block;
+}
+
+.startup-info {
+    line-height: 2;
+}
+.startup-info strong {
+    width: 30%;
+    display: inline-block;
+}
+
+.teams img {
+    float: left;
+    background: #eee;
+    margin-top: -2px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    margin-right: 10px;
+    vertical-align: middle;
 }

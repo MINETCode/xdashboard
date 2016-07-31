@@ -55,7 +55,23 @@
             <div class="row">
                 <div class="half">
                     <div class="card">
-                        aoijfds
+                        <h3>School Info</h3>
+                        <p class="startup-info">
+                            <?php
+                                $results = DB::query("SELECT * FROM teams WHERE username = %s LIMIT 1", $_SESSION["username"]);
+                                foreach ($results as $row) {
+                                    $address = $row["school_address"];
+                                    $email = $row["email"];
+                                    $phone = $row["phone"];
+                                }
+                            ?>
+                            <strong>Institution</strong><?php echo $_SESSION["school_name"]; ?><br>
+                            <strong>Address</strong><?php echo $address; ?><br>
+                            <strong>Email</strong><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a><br>
+                        </p>
+                        <div class="help-link">
+                            <a href="settings.php">Edit</a>
+                        </div>
                     </div>
                     <div class="card">
                         <div class="eventlog">
@@ -77,14 +93,17 @@
                                     ';
                                 }
                             ?>
-                            <p>
-                                <a href="events.php">View all &rarr;</a>
-                            </p>
+                            <div class="help-link">
+                                <a href="events.php">View all</a>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="half">
                     <div class="card">
+                        <div class="help-link">
+                            <a href="stock.php">Details</a>
+                        </div>
                         <h3 style="margin-bottom: 0">Stock Price</h3>
                         <div class="big up" id="stock_price">
                             <?php
@@ -149,6 +168,72 @@
                                             echo $row["stock_price"];
                                         }
                                     ?></strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card teams">
+                        <div class="help-link">
+                            <a href="team.php">Edit</a>
+                        </div>
+                        <h3>Team</h3>
+                        <div class="row">
+                            <div class="half">
+                                <p>
+                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("anandchowdhary@gmail.com"); ?>?d=identicon"> Nishant Gadihoke
+                                </p>
+                            </div>
+                            <div class="half">
+                                <p>
+                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hello@anandchowdhary.com"); ?>?d=retro"> Shreyvardhan Sharma
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="half">
+                                <p>
+                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hsello@anandchowdhary.com"); ?>?d=retro"> Krishna Dusad
+                                </p>
+                            </div>
+                            <div class="half">
+                                <p>
+                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hella@anandchowdhaary.com"); ?>?d=retro"> Akshat Pandey
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="half">
+                                <p>
+                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hsello@ana2hndchowdhary.com"); ?>?d=retro"> Vinay Gopalan
+                                </p>
+                            </div>
+                            <div class="half">
+                                <p>
+                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hella@anandcho2wdhary.com"); ?>?d=retro"> Anand Chowdhary
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="half">
+                                <p>
+                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hsello@anandrchowdhary.com"); ?>?d=retro"> Potato Singh
+                                </p>
+                            </div>
+                            <div class="half">
+                                <p>
+                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hella@anandxchowdhary.com"); ?>?d=retro"> Ritesh Aggarwal
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="half">
+                                <p>
+                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hsello@anandcbhowdhary.com"); ?>?d=retro"> Sean Parker
+                                </p>
+                            </div>
+                            <div class="half">
+                                <p>
+                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hella@anandchodwdhary.com"); ?>?d=retro"> Jim Reeves
                                 </p>
                             </div>
                         </div>
