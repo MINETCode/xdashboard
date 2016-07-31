@@ -1,6 +1,4 @@
-w@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700';
-
-a {
+ a {
     transition: color 0.2s;
 }
 
@@ -11,7 +9,7 @@ body.big {
 }
 
 body {
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: "rooney-sans", "Helvetica", "Lucida Sans", sans-serif;
     background: whitesmoke;
     line-height: 1.5;
 }
@@ -29,6 +27,25 @@ fieldset, .card {
 }
 fieldset:last-child, .card:last-child {
     margin-bottom: 0;
+}
+
+.center {
+    position: absolute;
+    width: 650px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+}
+
+#loginCard {
+    height: 450px;
+}
+
+#registerCard {
+    height: 250px;
 }
 
 .help-link {
@@ -80,13 +97,14 @@ input:focus, select:focus {
 
 input[type="submit"], a.button {
     font-weight: bold;
-    background: #3498db;
-    border-color: #3498db;
+    background: #69e;
+    border-color: #69e;
     color: white;
+    cursor: pointer;
 }
 input[type="submit"]:hover, a.button:hover {
-    background: #2980b9;
-    border-color: #2980b9;
+    background: #216be6;
+    border-color: #216be6;
 }
 
 a.button {

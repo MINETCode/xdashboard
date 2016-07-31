@@ -27,7 +27,15 @@
 <html>
     <head>
         <title>X</title>
-        <link rel="stylesheet" href="style.css">
+        <meta charset="utf-8">
+        <meta name="author" content="The MINET Team">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="style.css">
+
+        <link rel="icon" type="image/png" href="img/icon.png">
+        <link rel="apple-touch-icon-precomposed" href="img/icon.png">
+        <meta name="theme-color" content="#2979ff">
     </head>
     <body class="big">
         <div class="update_time"></div>
@@ -259,5 +267,7 @@
                 }
             }, 30000);
         </script>
+        <script src="https://use.typekit.net/ucv3orh.js"></script>
+        <script>try{Typekit.load({ async: true });}catch(e){}</script>
     </body>
 </html>
