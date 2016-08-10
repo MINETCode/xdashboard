@@ -3,7 +3,7 @@
     <head>
         <?php include "backend/header.php"; ?>
     </head>
-    <body>
+    <body style="max-width: 800px">
         <header id="masthead">
             <div class="container">
                 <div class="half">
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </header>
-        <!--<div class="update_time"></div>-->
+        <div class="update_time"></div>
         <div class="card">
             <h1>Leaderboard</h1>
             <div id="leaderboard">
@@ -40,6 +40,9 @@
                             <th>
                                 Stock Price
                             </th>
+                            <th>
+                                Startup Profile
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,10 +57,20 @@
                                 DB::$password = "anand01";
                                 DB::$dbName = "classkwo_minet";
                             }
-                            $results = DB::query("SELECT teams.school_name, teams.id, prices.stock_price FROM teams, prices WHERE teams.id = prices.team_id GROUP BY teams.school_name ORDER BY prices.id DESC");
+                            $results = DB::query("SELECT teams.school_name, teams.startup_name, teams.id, prices.stock_price FROM teams, prices WHERE teams.id = prices.team_id GROUP BY teams.school_name ORDER BY prices.id DESC");
                             $i = 0;
                             foreach ($results as $row) {
                                 $price = $row["stock_price"];
+                                $startup_name = $row["startup_name"];
+                                if ($startup_name == "") {
+                                    $random1 = array("Uber", "Content", "Tweet", "Web", "Attention", "Blog", "Tech", "Music", "Net", "Sales", "Social", "You", "Web", "Link", "Simple");
+                                    $random2 = array("force", "Hunt", "Explorer", "ify", "ly", "App", "Trust", "Burner", "Talk", "book", "loop", "Spot", "gator", "vibes", "cut", "set", "leaf", "world", "Jag", "shots", "Egg");
+                                    $random_keys1 = array_rand($random1, 1);
+                                    $random_keys2 = array_rand($random2, 1);
+                                    $startup_name = $random1[$random_keys1];
+                                    $startup_name .= $random2[$random_keys2];
+                                    $startup_name .= " *";
+                                }
                                 $random = mt_rand(1, 99);
                                 $random = $random < 10 ? "0" . $random : $random;
                                 $random_price = mt_rand(0, 5);
@@ -73,10 +86,14 @@
                                         ' . ++$i . '
                                     </td>
                                     <td>
-                                        ' . $row["school_name"] . '
+                                        <strong>' . $startup_name . '</strong><br>
+                                        <span>' . $row["school_name"] . '</span>
                                     </td>
                                     <td>
                                         <span class="' . $class . ' med stock_price_' . $row["id"] . '" id="stock_price">' . $finalPrice . '.' . $random . '</span>
+                                    </td>
+                                    <td>
+                                        View Profile
                                     </td>
                                     </tr>
                                 ';
@@ -84,9 +101,12 @@
                         ?>
                     </tbody>
                 </table>
+                <p>
+                    * = Randomly-generated temporary startup name.
+                </p>
             </div>
         </div>
-        <script><!--
+        <script>
         setInterval(function() {
         <?php
             for ($i = 1; $i < 17; $i++) {
@@ -108,7 +128,7 @@
                 ';
             }
         ?>
-        }, 30000);-->
+        }, 30000);
     </script>
     <?php include "backend/footer.php"; ?>
     </body>
