@@ -1,7 +1,11 @@
 <?php
     session_start();
     if (!isset($_SESSION["username"])) {
-        header("Location: ../index.php");
+        if ($_SERVER['REMOTE_ADDR'] == "::1") {
+            header("Location: ../index.php");
+        } else {
+            header("Location: https://x.minet.co");
+        }
     }
     file_exists("class.php") ? include "class.php" : include "../class.php";
     if ($_SERVER['REMOTE_ADDR'] == "::1") {
@@ -20,10 +24,18 @@
     if (md5($_POST["old_password"]) == $current_pass) {
         $results = DB::query("UPDATE teams SET password = %s, email = %s, phone = %s, school_name = %s, school_address = %s  WHERE id = %s", md5($_POST["new_password"]), $_POST["email"], $_POST["phone"], $_POST["schoolName"], $_POST["schoolAddress"], $_SESSION["id"]);
         $results = DB::query("INSERT into eventlog (username, category, verb, event, datetime) VALUES (%s, %s, %s, %s, %s)", $_SESSION["username"], "settings", "changed", "password", time());
-        header("Location: ../settings.php?password=1");
+        if ($_SERVER['REMOTE_ADDR'] == "::1") {
+            header("Location: ../settings.php?password=1");
+        } else {
+            header("Location: https://x.minet.co/settings?password=1");
+        }
     } else {
         $results = DB::query("UPDATE teams SET email = %s, phone = %s, school_name = %s, school_address = %s WHERE id = %s", $_POST["email"], $_POST["phone"], $_POST["schoolName"], $_POST["schoolAddress"], $_SESSION["id"]);
         $results = DB::query("INSERT into eventlog (username, category, verb, event, datetime) VALUES (%s, %s, %s, %s, %s)", $_SESSION["username"], "settings", "changed", "settings", time());
-        header("Location: ../settings.php?updated=1");
+        if ($_SERVER['REMOTE_ADDR'] == "::1") {
+            header("Location: ../settings.php?updated=1");
+        } else {
+            header("Location: https://x.minet.co/settings?updated=1");
+        }
     }
 ?>

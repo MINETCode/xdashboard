@@ -1,7 +1,11 @@
 <?php
     session_start();
     if (!isset($_SESSION["username"])) {
-        header("Location: login.php");
+        if ($_SERVER['REMOTE_ADDR'] == "::1") {
+            header("Location: login.php");
+        } else {
+            header("Location: https://x.minet.co/login");
+        }
     }
     file_exists("class.php") ? include "class.php" : include "../class.php";
     if ($_SERVER['REMOTE_ADDR'] == "::1") {
@@ -18,7 +22,6 @@
         $pds = array('second','minute','hour','day','week','month','year','decade');
         $lngh = array(1,60,3600,86400,604800,2630880,31570560,315705600);
         for($v = sizeof($lngh)-1; ($v >= 0)&&(($no = $dif/$lngh[$v])<=1); $v--); if($v < 0) $v = 0; $_tm = $cur_tm-($dif%$lngh[$v]);
-
         $no = floor($no); if($no <> 1) $pds[$v] .='s'; $x=sprintf("%d %s ",$no,$pds[$v]);
         if(($rcs == 1)&&($v >= 1)&&(($cur_tm-$_tm) > 0)) $x .= time_ago($_tm);
         return $x;
@@ -27,15 +30,7 @@
 <html>
     <head>
         <title>X</title>
-        <meta charset="utf-8">
-        <meta name="author" content="The MINET Team">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <link rel="stylesheet" type="text/css" href="style.css">
-
-        <link rel="icon" type="image/png" href="img/icon.png">
-        <link rel="apple-touch-icon-precomposed" href="img/icon.png">
-        <meta name="theme-color" content="#2979ff">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body class="big">
         <div class="update_time"></div>
@@ -49,11 +44,11 @@
                 <div class="half">
                     <nav>
                         <ul>
-                            <li class="active"><a href="index.php">Dashboard</a></li>
-                            <li><a href="profile.php">Profile</a></li>
-                            <li><a href="startups.php">Startups</a></li>
-                            <li><a href="settings.php">Settings</a></li>
-                            <li><a href="logout.php">Log out</a></li>
+                            <li class="active"><a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "index.php" : "https://x.minet.co"; ?>">Dashboard</a></li>
+                            <li><a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "profile.php" : "https://x.minet.co/profile"; ?>">Profile</a></li>
+                            <li><a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "startups.php" : "https://x.minet.co/startups"; ?>">Startups</a></li>
+                            <li><a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "settings.php" : "https://x.minet.co/settings"; ?>">Settings</a></li>
+                            <li><a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "logout.php" : "https://x.minet.co/logout"; ?>">Log out</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -78,14 +73,14 @@
                             <strong>Email</strong><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a><br>
                         </p>
                         <div class="help-link">
-                            <a href="settings.php">Edit</a>
+                            <a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "settings.php" : "https://x.minet.co/settings"; ?>">Edit</a>
                         </div>
                     </div>
                     <div class="card">
                         <div class="eventlog">
                             <h3>Events</h3>
                             <?php
-                                $results = DB::query("SELECT * FROM eventlog WHERE username = %s ORDER BY id DESC LIMIT 20", $_SESSION["username"]);
+                                $results = DB::query("SELECT * FROM eventlog WHERE username = %s ORDER BY id DESC LIMIT 5", $_SESSION["username"]);
                                 $nResults = 0;
                                 foreach ($results as $row) {
                                     echo '
@@ -102,7 +97,7 @@
                                 }
                             ?>
                             <div class="help-link">
-                                <a href="events.php">View all</a>
+                                <a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "events.php" : "https://x.minet.co/events"; ?>">Details</a>
                             </div>
                         </div>
                     </div>
@@ -110,7 +105,7 @@
                 <div class="half">
                     <div class="card">
                         <div class="help-link">
-                            <a href="stock.php">Details</a>
+                            <a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "stock.php" : "https://x.minet.co/stock"; ?>">Details</a>
                         </div>
                         <h3 style="margin-bottom: 0">Stock Price</h3>
                         <div class="big up" id="stock_price">
@@ -182,68 +177,23 @@
                     </div>
                     <div class="card teams">
                         <div class="help-link">
-                            <a href="team.php">Edit</a>
+                            <a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "team.php" : "https://x.minet.co/team"; ?>">Edit</a>
                         </div>
                         <h3>Team</h3>
                         <div class="row">
-                            <div class="half">
-                                <p>
-                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("anandchowdhary@gmail.com"); ?>?d=identicon"> Nishant Gadihoke
-                                </p>
-                            </div>
-                            <div class="half">
-                                <p>
-                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hello@anandchowdhary.com"); ?>?d=retro"> Shreyvardhan Sharma
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="half">
-                                <p>
-                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hsello@anandchowdhary.com"); ?>?d=retro"> Krishna Dusad
-                                </p>
-                            </div>
-                            <div class="half">
-                                <p>
-                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hella@anandchowdhaary.com"); ?>?d=retro"> Akshat Pandey
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="half">
-                                <p>
-                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hsello@ana2hndchowdhary.com"); ?>?d=retro"> Vinay Gopalan
-                                </p>
-                            </div>
-                            <div class="half">
-                                <p>
-                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hella@anandcho2wdhary.com"); ?>?d=retro"> Anand Chowdhary
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="half">
-                                <p>
-                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hsello@anandrchowdhary.com"); ?>?d=retro"> Potato Singh
-                                </p>
-                            </div>
-                            <div class="half">
-                                <p>
-                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hella@anandxchowdhary.com"); ?>?d=retro"> Ritesh Aggarwal
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="half">
-                                <p>
-                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hsello@anandcbhowdhary.com"); ?>?d=retro"> Sean Parker
-                                </p>
-                            </div>
-                            <div class="half">
-                                <p>
-                                    <img src="http://www.gravatar.com/avatar/<?php echo md5("hella@anandchodwdhary.com"); ?>?d=retro"> Jim Reeves
-                                </p>
-                            </div>
+                            <?php
+                                $result = DB::query("SELECT * FROM participants WHERE team_id = %s", $_SESSION["id"]);
+                                foreach ($result as $row) {
+                                    echo '
+                                        <div class="half">
+                                            <p>
+                                                <img src="https://www.gravatar.com/avatar/' . md5($row["email"]) . '">
+                                                ' . $row["name"] . '
+                                            </p>
+                                        </div>
+                                    ';
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -267,7 +217,6 @@
                 }
             }, 30000);
         </script>
-        <script src="https://use.typekit.net/ucv3orh.js"></script>
-        <script>try{Typekit.load({ async: true });}catch(e){}</script>
+        <?php include "backend/footer.php"; ?>
     </body>
 </html>

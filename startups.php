@@ -2,18 +2,30 @@
 <html>
     <head>
         <title>X</title>
-        <meta charset="utf-8">
-        <meta name="author" content="The MINET Team">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <link rel="stylesheet" type="text/css" href="style.css">
-
-        <link rel="icon" type="image/png" href="img/icon.png">
-        <link rel="apple-touch-icon-precomposed" href="img/icon.png">
-        <meta name="theme-color" content="#2979ff">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <div class="update_time"></div>
+        <header id="masthead">
+            <div class="container">
+                <div class="half">
+                    <a href="index.php" class="logo">
+                        MINET
+                    </a>
+                </div>
+                <div class="half">
+                    <nav>
+                        <ul>
+                            <li><a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "index.php" : "https://x.minet.co"; ?>">Dashboard</a></li>
+                            <li><a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "profile.php" : "https://x.minet.co/profile"; ?>">Profile</a></li>
+                            <li class="active"><a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "startups.php" : "https://x.minet.co/startups"; ?>">Startups</a></li>
+                            <li><a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "settings.php" : "https://x.minet.co/settings"; ?>">Settings</a></li>
+                            <li><a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "logout.php" : "https://x.minet.co/logout"; ?>">Log out</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <!--<div class="update_time"></div>-->
         <div class="card">
             <h1>Leaderboard</h1>
             <div id="leaderboard">
@@ -43,7 +55,7 @@
                                 DB::$password = "anand01";
                                 DB::$dbName = "classkwo_minet";
                             }
-                            $results = DB::query("SELECT teams.school_name, teams.id, prices.stock_price FROM teams, prices WHERE teams.id = prices.team_id ORDER BY prices.id DESC");
+                            $results = DB::query("SELECT teams.school_name, teams.id, prices.stock_price FROM teams, prices WHERE teams.id = prices.team_id GROUP BY teams.school_name ORDER BY prices.id DESC");
                             $i = 0;
                             foreach ($results as $row) {
                                 $price = $row["stock_price"];
@@ -75,7 +87,7 @@
                 </table>
             </div>
         </div>
-        <script>
+        <script><!--
         setInterval(function() {
         <?php
             for ($i = 1; $i < 17; $i++) {
@@ -97,9 +109,8 @@
                 ';
             }
         ?>
-        }, 30000);
+        }, 30000);-->
     </script>
-    <script src="https://use.typekit.net/ucv3orh.js"></script>
-    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <?php include "backend/footer.php"; ?>
     </body>
 </html>

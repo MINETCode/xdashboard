@@ -1,7 +1,11 @@
 <?php
     session_start();
     if (isset($_SESSION["username"])) {
-        header("Location: ../index.php");
+        if ($_SERVER['REMOTE_ADDR'] == "::1") {
+            header("Location: ../index.php");
+        } else {
+            header("Location: https://x.minet.co");
+        }
     }
     file_exists("class.php") ? include "class.php" : include "../class.php";
     if ($_SERVER['REMOTE_ADDR'] == "::1") {
@@ -27,8 +31,17 @@
         $_SESSION["id"] = $id;
         $_SESSION["school_name"] = $school_name;
         $results = DB::query("INSERT into eventlog (username, category, verb, event, datetime) VALUES (%s, %s, %s, %s, %s)", $_SESSION["username"], "sessions", "started", "session from " . $_SERVER["REMOTE_ADDR"], time());
-        header("Location: ../index.php");
+        echo "Login Yes";
+        if ($_SERVER['REMOTE_ADDR'] == "::1") {
+            header("Location: ../index.php");
+        } else {
+            header("Location: https://x.minet.co");
+        }
     } else {
-        header("Location: ../login.php?try=1");
+        if ($_SERVER['REMOTE_ADDR'] == "::1") {
+            header("Location: ../login.php?try=1");
+        } else {
+            header("Location: https://x.minet.co/login?try=1");
+        }
     }
 ?>

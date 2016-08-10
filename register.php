@@ -18,15 +18,7 @@
 <html>
     <head>
         <title>X</title>
-        <meta charset="utf-8">
-        <meta name="author" content="The MINET Team">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <link rel="stylesheet" type="text/css" href="style.css">
-
-        <link rel="icon" type="image/png" href="img/icon.png">
-        <link rel="apple-touch-icon-precomposed" href="img/icon.png">
-        <meta name="theme-color" content="#2979ff">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <?php
@@ -57,7 +49,7 @@
                     if ($registered == 0) {
         ?>
         <form action="backend/register.php" method="post">
-            <fieldset id="registerCard" class="center">
+            <fieldset>
                 <h1>
                     Registration
                 </h1>
@@ -130,7 +122,6 @@
     }
 }
         ?>
-    <script src="https://use.typekit.net/ucv3orh.js"></script>
-    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+        <?php include "backend/footer.php"; ?>
     </body>
 </html>

@@ -18,15 +18,7 @@
 <html>
     <head>
         <title>X</title>
-        <meta charset="utf-8">
-        <meta name="author" content="The MINET Team">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <link rel="stylesheet" type="text/css" href="style.css">
-
-        <link rel="icon" type="image/png" href="img/icon.png">
-        <link rel="apple-touch-icon-precomposed" href="img/icon.png">
-        <meta name="theme-color" content="#2979ff">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <header id="masthead">
@@ -39,11 +31,11 @@
                 <div class="half">
                     <nav>
                         <ul>
-                            <li><a href="index.php">Dashboard</a></li>
-                            <li><a href="profile.php">Profile</a></li>
-                            <li><a href="startups.php">Startups</a></li>
-                            <li><a href="settings.php">Settings</a></li>
-                            <li><a href="logout.php">Log out</a></li>
+                            <li><a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "index.php" : "https://x.minet.co"; ?>">Dashboard</a></li>
+                            <li><a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "profile.php" : "https://x.minet.co/profile"; ?>">Profile</a></li>
+                            <li><a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "startups.php" : "https://x.minet.co/startups"; ?>">Startups</a></li>
+                            <li><a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "settings.php" : "https://x.minet.co/settings"; ?>">Settings</a></li>
+                            <li><a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "logout.php" : "https://x.minet.co/logout"; ?>">Log out</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -83,7 +75,6 @@
                 ?>
             </div>
         </div>
-    <script src="https://use.typekit.net/ucv3orh.js"></script>
-    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+        <?php include "backend/footer.php"; ?>
     </body>
 </html>
