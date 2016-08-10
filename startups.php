@@ -26,7 +26,7 @@
         </header>
         <div class="update_time"></div>
         <div class="card">
-            <h1>Leaderboard</h1>
+            <h1>Startups</h1>
             <div id="leaderboard">
                 <table>
                     <thead>
@@ -93,8 +93,8 @@
                                     <td>
                                         <span class="' . $class . ' med stock_price_' . $row["id"] . '" id="stock_price">' . $finalPrice . '.' . $random . '</span>
                                     </td>
-                                    <td>
-                                        <a href="https://x.minet.co/profile?id=' . $teamID . '">View Profile &rsaquo;</a>
+                                    <td style="text-align: center">
+                                        <a href="https://x.minet.co/profile?id=' . $teamID . '">View Profile</a> <span style="font-size: 175%; text-decoration: none; color: #69e; display: inline-block; transform: translateY(2px)">&rsaquo;</span>
                                     </td>
                                     </tr>
                                 ';

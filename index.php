@@ -64,12 +64,20 @@
                                 foreach ($results as $row) {
                                     $address = $row["school_address"];
                                     $email = $row["email"];
+                                    $invitecode = $row["invitecode"];
+                                    if (isset($row["slack_email"])) {
+                                        $slack_email = $row["slack_email"];
+                                    } else {
+                                        $slack_email = "Unavailable";
+                                    }
                                     $phone = $row["phone"];
                                 }
                             ?>
                             <strong>Institution</strong><?php echo $_SESSION["school_name"]; ?><br>
                             <strong>Address</strong><?php echo $address; ?><br>
                             <strong>Email</strong><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a><br>
+                            <strong><a style="color:inherit" href="https://minet-x.slack.com" target="_blank"><img src="https://www.firangana.com/non-wp-includes/favicon.php?url=slack.com" style="margin-right: 10px; vertical-align: middle">Login</a></strong>Username: <?php echo $slack_email; ?><br>
+                            <strong>&nbsp;</strong>Password: <?php echo $invitecode; ?><br>
                         </p>
                         <div class="help-link">
                             <a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "settings.php" : "https://x.minet.co/settings"; ?>">Edit</a>
