@@ -29,8 +29,7 @@
 ?><!doctype html>
 <html>
     <head>
-        <title>X</title>
-        <link rel="stylesheet" href="style.css">
+        <?php include "backend/header.php"; ?>
     </head>
     <body class="big">
         <div class="update_time"></div>
@@ -180,18 +179,48 @@
                             <a href="<?php echo $_SERVER['REMOTE_ADDR'] == "::1" ? "team.php" : "https://x.minet.co/team"; ?>">Edit</a>
                         </div>
                         <h3>Team</h3>
-                        <div class="row">
+                        <div class="row team">
                             <?php
-                                $result = DB::query("SELECT * FROM participants WHERE team_id = %s", $_SESSION["id"]);
+                                $result = DB::query("SELECT * FROM teams WHERE id = %s", $_SESSION["id"]);
+                                $n_participants = 0;
                                 foreach ($result as $row) {
-                                    echo '
-                                        <div class="half">
-                                            <p>
-                                                <img src="https://www.gravatar.com/avatar/' . md5($row["email"]) . '">
-                                                ' . $row["name"] . '
-                                            </p>
-                                        </div>
-                                    ';
+                                    $events = array("design", "programming", "quiz", "gaming", "speaking");
+                                    foreach ($events as $event) {
+                                        for ($i = 1; $i < 4; $i++) {
+                                            $i_row = $event . "_participant_" . $i;
+                                            if (isset($row[$i_row . "_name"])) {
+                                                if ($row[$i_row . "_name"] != "") {
+                                                    $n_participants++;
+                                                    echo '
+                                                        <div class="half">
+                                                            <p>
+                                                                <img src="https://www.gravatar.com/avatar/' . md5($row[$i_row . "_email"]) . '?d=retro">
+                                                                ' . $row[$i_row . "_name"] . '
+                                                            </p>
+                                                        </div>
+                                                    ';
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                if ($n_participants == 0) {
+                                    echo "
+                                    <div style='text-align:center'>
+                                        <p>
+                                            <img style='float: none; border-radius: 0; background: none; width: 50%; height: auto; opacity: 0.5' alt='' src='img/sleeper.png'>
+                                        </p>
+                                        <p style='color:#aaa'>You haven&rsquo;t added your team yet.</p>
+                                        <p>
+                                            <a class='button' href='" .
+                                                "https://x.minet.co/team"
+                                            . "'>Add your Team</a>
+                                        </p>
+                                    </div>
+                                    ";
+                                } else {
+                                    echo "<div style='width:100%;clear:both'></div>";
+                                    echo "<p style='color:#aaa'>There are " . $n_participants . " members in your team.</p>";
                                 }
                             ?>
                         </div>

@@ -7,8 +7,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>X</title>
-        <link rel="stylesheet" href="style.css">
+        <?php include "backend/header.php"; ?>
     </head>
     <body>
         <header id="masthead">
@@ -83,7 +82,7 @@
                     <input name="email" id="label_email" value="<?php echo $email; ?>" type="email" required>
                 </p>
                 <p>
-                    <label for="label_phone">Contact No.:</label>
+                    <label for="label_phone">Student In-charge&rsquo;s Contact No.:</label>
                     <input name="phone" id="label_phone" value="<?php echo $phone; ?>" type="tel" required>
                 </p>
                 <p>

@@ -1,8 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>X</title>
-        <link rel="stylesheet" href="style.css">
+        <?php include "backend/header.php"; ?>
     </head>
     <body>
         <header id="masthead">

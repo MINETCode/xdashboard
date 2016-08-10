@@ -7,8 +7,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>X</title>
-        <link rel="stylesheet" href="style.css">
+        <?php include "backend/header.php"; ?>
     </head>
     <body>
         <form action="backend/login.php" method="post">
