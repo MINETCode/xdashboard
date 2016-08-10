@@ -61,6 +61,7 @@
                             $i = 0;
                             foreach ($results as $row) {
                                 $price = $row["stock_price"];
+                                $teamID = $row["id"];
                                 $startup_name = $row["startup_name"];
                                 if ($startup_name == "") {
                                     $random1 = array("Uber", "Content", "Tweet", "Web", "Attention", "Blog", "Tech", "Music", "Net", "Sales", "Social", "You", "Web", "Link", "Simple");
@@ -93,7 +94,7 @@
                                         <span class="' . $class . ' med stock_price_' . $row["id"] . '" id="stock_price">' . $finalPrice . '.' . $random . '</span>
                                     </td>
                                     <td>
-                                        View Profile
+                                        <a href="https://x.minet.co/profile?id=' . $teamID . '">View Profile &rsaquo;</a>
                                     </td>
                                     </tr>
                                 ';

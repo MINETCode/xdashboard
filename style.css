@@ -322,3 +322,68 @@ h3 {
     width: 100%;
     overflow: hidden;
 }
+
+.a3per {
+    width: 30%;
+    float: left;
+}
+.a7per {
+    width: 70%;
+    float: right;
+    position: relative;
+}
+
+.s-logo figure {
+    margin: 10px;
+    width: 150px;
+    height: 150px;
+    display: block;
+    border-radius: 7px;
+}
+.s-logo img {
+    width: 150px;
+    border-radius: 7px;
+    height: 150px;
+}
+
+.s-name {
+    text-align: left;
+    font-size: 175%;
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+.s-subheading {
+    font-weight: normal;
+}
+
+.default-logo {
+    width: 150px;
+    height: 150px;
+    text-align: center;
+    line-height: 150px;
+    font-size: 100px;
+    border-radius: 7px;
+    color: #fff;
+}
+
+.team-box {
+    line-height: 60px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.team-box img {
+    margin-right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    float: left;
+}
+
+.edit-btn-profile {
+    position: absolute;
+    width: 130px !important;
+    right: 0;
+    top: 0;
+}
