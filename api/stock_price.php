@@ -14,12 +14,18 @@
     foreach ($results as $row) {
         $price = $row["stock_price"];
     }
+    $level = 0;
+    $results = DB::query("SELECT level FROM teams WHERE id = %s ORDER BY id DESC LIMIT 1", $team_id);
+    foreach ($results as $row) {
+        $level = $row["level"];
+    }
     $random_price = mt_rand(0, 5);
     if (mt_rand(0, 1) > 0) {
         $finalPrice = $price + $random_price;
     } else {
         $finalPrice = $price - $random_price;
     }
+    $finalPrice += $level * 100;
     echo $finalPrice;
     if (!isset($_GET["integer"])) {
         $random = mt_rand(1, 99);

@@ -57,9 +57,11 @@
                                 DB::$password = "anand01";
                                 DB::$dbName = "classkwo_minet";
                             }
-                            $results = DB::query("SELECT teams.school_name, teams.startup_name, teams.id, prices.stock_price FROM teams, prices WHERE teams.id = prices.team_id GROUP BY teams.school_name ORDER BY prices.id DESC");
+                            $results = DB::query("SELECT teams.school_name, teams.level, teams.startup_name, teams.id, prices.stock_price FROM teams, prices WHERE teams.id = prices.team_id GROUP BY teams.school_name ORDER BY prices.id DESC");
                             $i = 0;
+                            $cryptXlevel = 0;
                             foreach ($results as $row) {
+                                $cryptXlevel = $row["level"];
                                 $price = $row["stock_price"];
                                 $teamID = $row["id"];
                                 $startup_name = $row["startup_name"];
@@ -82,6 +84,8 @@
                                     $finalPrice = $price - $random_price;
                                     $class = "down";
                                 }
+                                $cryptXlevelPrice = $cryptXlevel * 100;
+                                $finalPrice += $cryptXlevelPrice;
                                 echo '<tr>
                                     <td style="text-align: center">
                                         ' . ++$i . '
